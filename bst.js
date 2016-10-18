@@ -49,4 +49,15 @@ class binarySearchTree {
       this.dfs(node.right, target);
     }
   }
+
+  invert(root) {
+    if (root) {
+      let left = root.left ? root.left : null,
+          right = root.right ? root.right : null;
+      root.left = this.invert(right);
+      root.right = this.invert(left);
+    }
+    return root;
+  }
+
 }
