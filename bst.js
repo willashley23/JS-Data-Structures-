@@ -1,4 +1,7 @@
 class binarySearchTree {
+  constructor() {
+    this.head = null;
+  }
 
   createNode(input) {
     return {
@@ -6,10 +9,6 @@ class binarySearchTree {
       right: null,
       data: input,
     };
-  }
-
-  bst() {
-    this.head = null;
   }
 
   add(input) {
@@ -39,4 +38,15 @@ class binarySearchTree {
     return this;
   }
 
+  dfs(node, target = 0) {
+    if (node) {
+      if (node.data === target) {
+        console.log(node)
+        return node;
+      } 
+      console.log(node.data);
+      this.dfs(node.left, target);
+      this.dfs(node.right, target);
+    }
+  }
 }
