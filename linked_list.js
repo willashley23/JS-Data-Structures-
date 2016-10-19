@@ -241,4 +241,50 @@ export default class LinkedList {
     return this;
   }
 
+  isPalindrome() {
+    if (!this.head || !this.head.next) {
+      console.log('Empty or single element List.');
+      return;
+    }
+    let temp = JSON.stringify(this);
+    let deepCopy = JSON.parse(temp);
+    deepCopy.reverseInPlace();
+
+    let l2 = deepCopy.head;
+    let l1 = this.head;
+
+    while (l2) {
+      if (l2.data !== l1.data) {
+        return false;
+      }
+      l2 = l2.next;
+      l1 = l1.next;
+    }
+    return true;
+  }
+
+  partition(value) {
+    let lhs = new LinkedList();
+    let rhs = new LinkedList();
+    let currentNode = this.head;
+
+    while (currentNode) {
+      if (currentNode.data < value) {
+        lhs.add(currentNode.data);
+      } else if (currentNode.data >= value) {
+        rhs.add(currentNode.data);
+      }
+      currentNode = currentNode.next;
+    }
+
+    // Combine lists
+    let currentNode = lhs.head;
+    while (currentNode.next) {
+      currentNode = currentNode.next;
+    }
+    currentNode.next = rhs.head;
+
+    return lhs;
+  }
+
 }
