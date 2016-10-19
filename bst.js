@@ -1,3 +1,6 @@
+import List from './linked_list';
+import Node from './linked_list';
+
 class binarySearchTree {
   constructor() {
     this.head = null;
@@ -41,13 +44,65 @@ class binarySearchTree {
   dfs(node, target = 0) {
     if (node) {
       if (node.data === target) {
-        console.log(node)
         return node;
       } 
-      console.log(node.data);
-      this.dfs(node.left, target);
-      this.dfs(node.right, target);
+      return this.dfs(node.left, target) || this.dfs(node.right, target);
     }
+  }
+
+  preOrder(node = this.head) {
+
+    console.log(node.data);
+    if (node.left) {
+      this.preOrder(node.left);
+    } 
+    if (node.right) {
+      this.preOrder(node.right);
+    }
+
+  }
+
+  inOrder(node = this.head) {
+
+    if (node.left) {
+      this.inOrder(node.left);
+    }
+    console.log(node.data);
+    if (node.right) {
+      this.inOrder(node.right);
+    }
+
+  }
+
+  postOrder(node = this.head) {
+
+    if (node.left){
+      this.postOrder(node.left)
+    }
+    if (node.right) {
+      this.postOrder(node.right);
+    }
+    console.log(node.data);
+
+  }
+
+  flattenToLinkedList(root = this.head, listsArray = [], level = 0) {
+    if (root === null) {
+      return;
+    }
+
+    let list = null;
+    if (listsArray.length === level) {
+      list = new List();
+      listsArray[level] = list;
+    } else {
+      list = listsArray[level];
+    }
+
+    list.add(root.data);
+    flattenToLinkedList(root.left, lists, level + 1);
+    flattenToLinkedList(root.right, lists, level + 1);
+
   }
 
   invert(root) {
