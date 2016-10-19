@@ -1,9 +1,10 @@
 import List from './linked_list';
 import Node from './linked_list';
 
-class binarySearchTree {
+class BinarySearchTree {
   constructor() {
     this.head = null;
+    this.marked = false;
   }
 
   createNode(input) {
@@ -11,6 +12,7 @@ class binarySearchTree {
       left: null,
       right: null,
       data: input,
+      marked: false,
     };
   }
 
@@ -41,7 +43,7 @@ class binarySearchTree {
     return this;
   }
 
-  dfs(node, target = 0) {
+  dfs(node = this.head, target = 0) {
     if (node) {
       if (node.data === target) {
         return node;
@@ -49,6 +51,34 @@ class binarySearchTree {
       return this.dfs(node.left, target) || this.dfs(node.right, target);
     }
   }
+
+
+  bfs(node = this.head, target = 0) {
+    let queue = [];
+    node.marked = true;
+    queue.unshift(node);
+
+    while(queue.length > 0) {
+      let temp = queue.pop();
+      if (temp.data === target) {
+        return temp;
+      }
+      if (temp.left) {
+        if (!temp.left.marked) {
+          temp.left.marked = true;
+          queue.unshift(temp.left);
+        }
+      }
+      if (temp.right) {
+        if (!temp.right.marked) {
+          temp.right.marked = true;
+          queue.unshift(temp.right);
+        }
+      }
+    }
+    return "No such node."
+  }
+
 
   preOrder(node = this.head) {
 
